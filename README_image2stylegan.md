@@ -31,9 +31,9 @@ StyleGAN2 base code borrowed from (https://github.com/rosinality/stylegan2-pytor
  - Other relevant options:
    - "--output_file" : path to save the output morphing image to 
  <!-- - `CUDA_VISIBLE_DEVICES=7 python im2stGAN.py --task="style_transfer" --path_w_a="projected_wplus/style_test_A.pt" --path_w_b="projected_wplus/style_test_B.pt" --output_file="viz/image_style_transfer.png"` -->
- - ![Combined](style_test_A.png | width=64) 
- - ![Combined](style_test_B.png | width=64) 
- - ![Combined](viz/image_style_transfer.png | width=64) 
+ - <img src="style_test_A.png" title="Image A" width="256" height="256" />
+   <img src="style_test_B.png" title="Image B" width="256" height="256" />
+   <img src="viz/image_style_transfer.png" title="Style Transfer" width="256" height="256" />
 
 ## Credits
  - https://github.com/rosinality/stylegan2-pytorch
