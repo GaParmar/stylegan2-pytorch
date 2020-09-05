@@ -147,9 +147,6 @@ if __name__ == "__main__":
         # 3. Save the morphing to file
         utils.save_image(gen_img, args.output_file,
                         normalize=True, range=(-1, 1))
-        # pdb.set_trace()
+
         
-    
-    elif args.task == "expression_transfer":
-        pass
 
