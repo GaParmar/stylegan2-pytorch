@@ -1,7 +1,7 @@
 import argparse
 import math
 import os
-
+import pdb
 import torch
 from torch import optim
 from torch.nn import functional as F
@@ -76,7 +76,7 @@ if __name__ == "__main__":
     device = "cuda"
 
     parser = argparse.ArgumentParser()
-    parser.add_argument("--ckpt", type=str, required=True)
+    parser.add_argument("--ckpt", type=str, default="550000.pt")
     parser.add_argument("--size", type=int, default=256)
     parser.add_argument("--lr_rampup", type=float, default=0.05)
     parser.add_argument("--lr_rampdown", type=float, default=0.25)
@@ -134,12 +134,12 @@ if __name__ == "__main__":
         noises.append(noise.repeat(imgs.shape[0], 1, 1, 1).normal_())
 
     latent_in = latent_mean.detach().clone().unsqueeze(0).repeat(imgs.shape[0], 1)
-
+    
     if args.w_plus:
         latent_in = latent_in.unsqueeze(1).repeat(1, g_ema.n_latent, 1)
 
     latent_in.requires_grad = True
-
+    pdb.set_trace()
     for noise in noises:
         noise.requires_grad = True
 
