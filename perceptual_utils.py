@@ -1,3 +1,5 @@
+# Code inspired from https://github.com/pytorch/examples/blob/d91adc972cef0083231d22bcc75b7aaa30961863/fast_neural_style/neural_style/vgg.py
+
 from collections import namedtuple
 
 import torch

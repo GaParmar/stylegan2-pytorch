@@ -37,4 +37,4 @@ StyleGAN2 base code borrowed from (https://github.com/rosinality/stylegan2-pytor
 
 ## Credits
  - https://github.com/rosinality/stylegan2-pytorch
- - 
+ - https://github.com/pytorch/examples/tree/d91adc972cef0083231d22bcc75b7aaa30961863/fast_neural_style
