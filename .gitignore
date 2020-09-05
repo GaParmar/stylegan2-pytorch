@@ -135,3 +135,4 @@ wandb/
 
 ## IMage to stylegan
 550000.pt
+projected_wplus/*

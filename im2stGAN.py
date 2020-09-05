@@ -20,7 +20,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--ckpt", type=str, default="550000.pt")
     parser.add_argument("--task", type=str, default="projection")
-    parser.add_argument("--image_path", type=str, default="morphing_test_B.png")
+    parser.add_argument("--image_path", type=str, default="style_test_A.png")
     parser.add_argument("--w_init", type=str, default="mean_face")
     parser.add_argument("--mean_n", type=int, default=5_000)
     parser.add_argument("--viz_frequency", type=int, default=100)
@@ -71,7 +71,7 @@ if __name__ == "__main__":
             w_mean_face = M.style(z).mean(0)
             w_plus = w_mean_face.detach().clone().view(1, 1, -1).repeat(1, M.n_latent, 1)
         elif args.w_init=="random_uniform":
-            w_plus = torch.rand(1, M.n_latent, 512)*2.0-1.0 # U[-1,+1]
+            w_plus = torch.rand(1, M.n_latent, 512).to(device)*2.0-1.0 # U[-1,+1]
         w_plus.requires_grad = True
         w_plus.to(device)
 
@@ -128,7 +128,27 @@ if __name__ == "__main__":
                         normalize=True, range=(-1, 1))
     
     elif args.task == "style_transfer":
-        pass
+        # make output dir if not exists
+        if not os.path.exists("viz"):  os.makedirs("viz")
+        # 1. Initialize the pretrained starganv2 model
+        M = Generator(args.size, 512, 8)
+        M.load_state_dict(torch.load(args.ckpt)["g_ema"], strict=False)
+        M.eval().to(device)
+        # 2. Load the w+ vectors for A and B images
+        A_w_plus = torch.load(args.path_w_a).to(device)
+        B_w_plus = torch.load(args.path_w_b).to(device)
+        # 3. make the combined w+
+        w_plus = A_w_plus.clone()
+        # replace the later layers
+        w_plus[:,8:,:] = B_w_plus[:,8:,:]
+        # 4. make the new image
+        with torch.no_grad():
+            gen_img, _ = M([w_plus], input_is_latent=True)
+        # 3. Save the morphing to file
+        utils.save_image(gen_img, args.output_file,
+                        normalize=True, range=(-1, 1))
+        # pdb.set_trace()
+        
     
     elif args.task == "expression_transfer":
         pass
